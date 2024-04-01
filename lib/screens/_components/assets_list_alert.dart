@@ -12,6 +12,24 @@ import '../../state/gold/gold_notifier.dart';
 import '../../state/shintaku/shintaku_notifier.dart';
 import '../../state/stock/stock_notifier.dart';
 import '../../utility/utility.dart';
+import '_money_dialog.dart';
+import 'assets_calendar_alert.dart';
+
+class AssetsInfo {
+  AssetsInfo(this.goldCost, this.goldPrice, this.goldDiff, this.stockCost, this.stockPrice, this.stockDiff, this.shintakuCost, this.shintakuPrice,
+      this.shintakuDiff, this.dispFlag);
+
+  int goldCost;
+  int goldPrice;
+  int goldDiff;
+  int stockCost;
+  int stockPrice;
+  int stockDiff;
+  int shintakuCost;
+  int shintakuPrice;
+  int shintakuDiff;
+  bool dispFlag;
+}
 
 class AssetsListAlert extends ConsumerWidget {
   AssetsListAlert({super.key, required this.date});
@@ -23,6 +41,8 @@ class AssetsListAlert extends ConsumerWidget {
   List<String> dateList = [];
 
   final autoScrollController = AutoScrollController();
+
+  Map<String, AssetsInfo> assetsInfoMap = {};
 
   late BuildContext _context;
   late WidgetRef _ref;
@@ -88,8 +108,7 @@ class AssetsListAlert extends ConsumerWidget {
       final stockDiff = (stockMap[element] == null) ? 0 : stockMap[element]!.diff;
       final shintakuDiff = (shintakuMap[element] == null) ? 0 : shintakuMap[element]!.diff;
 
-      final goldPercent =
-          (goldMap.value != null && goldMap.value![element] == null) ? 0 : goldMap.value![element]!.percent;
+      final goldPercent = (goldMap.value != null && goldMap.value![element] == null) ? 0 : goldMap.value![element]!.percent;
       final stockPercent = (stockMap[element] == null) ? 0 : stockMap[element]!.percent;
       final shintakuPercent = (shintakuMap[element] == null) ? 0 : shintakuMap[element]!.percent;
 
@@ -113,13 +132,7 @@ class AssetsListAlert extends ConsumerWidget {
             child: Container(
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.only(bottom: 10),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.white.withOpacity(0.3),
-                  ),
-                ),
-              ),
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -128,10 +141,7 @@ class AssetsListAlert extends ConsumerWidget {
                     children: [
                       Text(
                         '$element ($youbi)',
-                        style: TextStyle(
-                          color: dispFlag ? Colors.white : Colors.grey,
-                          fontSize: 10,
-                        ),
+                        style: TextStyle(color: dispFlag ? Colors.white : Colors.grey, fontSize: 10),
                       ),
                       Container(),
                     ],
@@ -149,74 +159,40 @@ class AssetsListAlert extends ConsumerWidget {
                                     ? '0'
                                     : goldMap.value![element]!.cost.toString().toCurrency(),
                               ),
-                              Text(
-                                goldPrice.toString().toCurrency(),
-                                style: const TextStyle(color: Colors.yellowAccent),
-                              ),
-                              Text(
-                                goldDiff.toString().toCurrency(),
-                                style: const TextStyle(color: Color(0xFFFBB6CE)),
-                              ),
+                              Text(goldPrice.toString().toCurrency(), style: const TextStyle(color: Colors.yellowAccent)),
+                              Text(goldDiff.toString().toCurrency(), style: const TextStyle(color: Color(0xFFFBB6CE))),
                             ],
                           ),
                         ),
                         Expanded(
                           child: Container(
                             alignment: Alignment.center,
-                            child: Column(
-                              children: [
-                                Text('$goldPercent %'),
-                                _dispUpDownMark(before: keepGoldPercent, after: goldPercent),
-                              ],
-                            ),
+                            child: Column(children: [Text('$goldPercent %'), _dispUpDownMark(before: keepGoldPercent, after: goldPercent)]),
                           ),
                         ),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                (stockMap[element] == null) ? '0' : stockMap[element]!.cost.toString().toCurrency(),
-                              ),
-                              Text(
-                                stockPrice.toString().toCurrency(),
-                                style: const TextStyle(color: Colors.yellowAccent),
-                              ),
-                              Text(
-                                stockDiff.toString().toCurrency(),
-                                style: const TextStyle(color: Color(0xFFFBB6CE)),
-                              ),
+                              Text((stockMap[element] == null) ? '0' : stockMap[element]!.cost.toString().toCurrency()),
+                              Text(stockPrice.toString().toCurrency(), style: const TextStyle(color: Colors.yellowAccent)),
+                              Text(stockDiff.toString().toCurrency(), style: const TextStyle(color: Color(0xFFFBB6CE))),
                             ],
                           ),
                         ),
                         Expanded(
                           child: Container(
                             alignment: Alignment.center,
-                            child: Column(
-                              children: [
-                                Text('$stockPercent %'),
-                                _dispUpDownMark(before: keepStockPercent, after: stockPercent),
-                              ],
-                            ),
+                            child: Column(children: [Text('$stockPercent %'), _dispUpDownMark(before: keepStockPercent, after: stockPercent)]),
                           ),
                         ),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                (shintakuMap[element] == null)
-                                    ? '0'
-                                    : shintakuMap[element]!.cost.toString().toCurrency(),
-                              ),
-                              Text(
-                                shintakuPrice.toString().toCurrency(),
-                                style: const TextStyle(color: Colors.yellowAccent),
-                              ),
-                              Text(
-                                shintakuDiff.toString().toCurrency(),
-                                style: const TextStyle(color: Color(0xFFFBB6CE)),
-                              ),
+                              Text((shintakuMap[element] == null) ? '0' : shintakuMap[element]!.cost.toString().toCurrency()),
+                              Text(shintakuPrice.toString().toCurrency(), style: const TextStyle(color: Colors.yellowAccent)),
+                              Text(shintakuDiff.toString().toCurrency(), style: const TextStyle(color: Color(0xFFFBB6CE))),
                             ],
                           ),
                         ),
@@ -243,17 +219,11 @@ class AssetsListAlert extends ConsumerWidget {
                             children: [
                               Text(
                                 (goldPrice + stockPrice + shintakuPrice).toString().toCurrency(),
-                                style: const TextStyle(
-                                  color: Colors.yellowAccent,
-                                  fontSize: 10,
-                                ),
+                                style: const TextStyle(color: Colors.yellowAccent, fontSize: 10),
                               ),
                               Text(
                                 (goldDiff + stockDiff + shintakuDiff).toString().toCurrency(),
-                                style: const TextStyle(
-                                  color: Color(0xFFFBB6CE),
-                                  fontSize: 10,
-                                ),
+                                style: const TextStyle(color: Color(0xFFFBB6CE), fontSize: 10),
                               ),
                             ],
                           ),
@@ -273,6 +243,19 @@ class AssetsListAlert extends ConsumerWidget {
         keepStockPercent = stockPercent;
         keepShintakuPercent = shintakuPercent;
       }
+
+      assetsInfoMap[element] = AssetsInfo(
+        (goldMap.value != null && goldMap.value![element] == null) ? 0 : goldMap.value![element]!.cost,
+        goldPrice,
+        goldDiff,
+        (stockMap[element] == null) ? 0 : stockMap[element]!.cost,
+        stockPrice,
+        stockDiff,
+        (shintakuMap[element] == null) ? 0 : shintakuMap[element]!.cost,
+        shintakuPrice,
+        shintakuDiff,
+        dispFlag,
+      );
 
       i++;
     });
@@ -304,10 +287,7 @@ class AssetsListAlert extends ConsumerWidget {
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 5),
                   padding: const EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple.withOpacity(0.6),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+                  decoration: BoxDecoration(color: Colors.deepPurple.withOpacity(0.6), borderRadius: BorderRadius.circular(20)),
                   alignment: Alignment.center,
                   child: Text(e),
                 ),
@@ -322,20 +302,21 @@ class AssetsListAlert extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(),
+                GestureDetector(
+                  onTap: () {
+                    MoneyDialog(context: _context, widget: AssetsCalendarAlert(assetsInfoMap: assetsInfoMap));
+                  },
+                  child: const Icon(Icons.calendar_month),
+                ),
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        autoScrollController.scrollToIndex(dateList.length);
-                      },
+                      onTap: () => autoScrollController.scrollToIndex(dateList.length),
                       child: const Icon(Icons.arrow_downward),
                     ),
                     const SizedBox(width: 20),
                     GestureDetector(
-                      onTap: () {
-                        autoScrollController.scrollToIndex(0);
-                      },
+                      onTap: () => autoScrollController.scrollToIndex(0),
                       child: const Icon(Icons.arrow_upward),
                     ),
                   ],
@@ -347,27 +328,18 @@ class AssetsListAlert extends ConsumerWidget {
           Expanded(
             child: SingleChildScrollView(
               controller: autoScrollController,
-              child: DefaultTextStyle(
-                style: const TextStyle(fontSize: 10),
-                child: Column(children: list),
-              ),
+              child: DefaultTextStyle(style: const TextStyle(fontSize: 10), child: Column(children: list)),
             ),
           ),
 
           Row(
-            children: [
-              '$minGoldPercent 〜 $maxGoldPercent %',
-              '$minStockPercent 〜 $maxStockPercent %',
-              '$minShintakuPercent 〜 $maxShintakuPercent %'
-            ].map((e) {
+            children: ['$minGoldPercent 〜 $maxGoldPercent %', '$minStockPercent 〜 $maxStockPercent %', '$minShintakuPercent 〜 $maxShintakuPercent %']
+                .map((e) {
               return Expanded(
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 5),
                   padding: const EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple.withOpacity(0.6),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+                  decoration: BoxDecoration(color: Colors.deepPurple.withOpacity(0.6), borderRadius: BorderRadius.circular(20)),
                   alignment: Alignment.center,
                   child: Text(e),
                 ),
@@ -384,23 +356,11 @@ class AssetsListAlert extends ConsumerWidget {
   ///
   Widget _dispUpDownMark({required int before, required int after}) {
     if (before < after) {
-      return const Icon(
-        Icons.arrow_upward,
-        color: Colors.greenAccent,
-        size: 12,
-      );
+      return const Icon(Icons.arrow_upward, color: Colors.greenAccent, size: 12);
     } else if (before > after) {
-      return const Icon(
-        Icons.arrow_downward,
-        color: Colors.redAccent,
-        size: 12,
-      );
+      return const Icon(Icons.arrow_downward, color: Colors.redAccent, size: 12);
     } else {
-      return const Icon(
-        Icons.crop_square,
-        color: Colors.transparent,
-        size: 12,
-      );
+      return const Icon(Icons.crop_square, color: Colors.transparent, size: 12);
     }
   }
 }
