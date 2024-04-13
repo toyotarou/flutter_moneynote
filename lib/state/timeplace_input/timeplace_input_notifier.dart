@@ -7,8 +7,7 @@ import '../../utility/utility.dart';
 import 'timeplace_input_state.dart';
 
 ////////////////////////////////////////////////
-final timeplaceInputProvider =
-    StateNotifierProvider.autoDispose.family<TimeplaceInputNotifier, TimeplaceInputState, String>((ref, baseDiff) {
+final timeplaceInputProvider = StateNotifierProvider.autoDispose.family<TimeplaceInputNotifier, TimeplaceInputState, String>((ref, baseDiff) {
   final client = ref.read(httpClientProvider);
 
   final utility = Utility();
