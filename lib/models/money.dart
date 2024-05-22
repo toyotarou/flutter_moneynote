@@ -57,6 +57,7 @@ class Money {
     required this.payC,
     required this.payD,
     required this.payE,
+    required this.payF,
     required this.sum,
     required this.currency,
   });
@@ -84,6 +85,7 @@ class Money {
         payC: json['pay_c'].toString(),
         payD: json['pay_d'].toString(),
         payE: json['pay_e'].toString(),
+        payF: json['pay_f'].toString(),
         sum: json['sum'].toString(),
         currency: 0,
       );
@@ -110,12 +112,12 @@ class Money {
   String payC;
   String payD;
   String payE;
+  String payF;
   String sum;
   int currency;
 
   Map<String, dynamic> toJson() => {
-        'date':
-            "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+        'date': "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
         'ym': ym,
         'yen_10000': yen10000,
         'yen_5000': yen5000,
@@ -137,6 +139,7 @@ class Money {
         'pay_c': payC,
         'pay_d': payD,
         'pay_e': payE,
+        'pay_f': payF,
         'sum': sum,
         'currency': currency,
       };

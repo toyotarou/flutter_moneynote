@@ -191,6 +191,7 @@ class MoneyKindListAlert extends ConsumerWidget {
         _displayCurrencyParts(value: value.payC.toCurrency(), width: width.toDouble(), color: color),
         _displayCurrencyParts(value: value.payD.toCurrency(), width: width.toDouble(), color: color),
         _displayCurrencyParts(value: value.payE.toCurrency(), width: width.toDouble(), color: color),
+        _displayCurrencyParts(value: value.payF.toCurrency(), width: width.toDouble(), color: color),
       ],
     );
   }

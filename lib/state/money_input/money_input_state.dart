@@ -31,6 +31,7 @@ class MoneyInputState with _$MoneyInputState {
     @Default('') String payC,
     @Default('') String payD,
     @Default('') String payE,
+    @Default('') String payF,
   }) = _MoneyInputState;
 
   factory MoneyInputState.fromJson(Map<String, dynamic> json) =>

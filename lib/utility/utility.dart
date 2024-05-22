@@ -32,6 +32,7 @@ class Utility {
     bankNames['pay_c'] = 'PASUMO';
     bankNames['pay_d'] = 'Suica2';
     bankNames['pay_e'] = 'メルカリ';
+    bankNames['pay_f'] = '楽天キャッシュ';
 
     return bankNames;
   }

@@ -21,8 +21,7 @@ moneyScoreProvider        MoneyResponseState
 
 ////////////////////////////////////////////////
 
-final moneyProvider =
-    StateNotifierProvider.autoDispose.family<MoneyNotifier, MoneyResponseState, DateTime>((ref, date) {
+final moneyProvider = StateNotifierProvider.autoDispose.family<MoneyNotifier, MoneyResponseState, DateTime>((ref, date) {
   final client = ref.read(httpClientProvider);
 
   final utility = Utility();
@@ -87,6 +86,7 @@ class MoneyNotifier extends StateNotifier<MoneyResponseState> {
           payC: value['data']['pay_c'].toString(),
           payD: value['data']['pay_d'].toString(),
           payE: value['data']['pay_e'].toString(),
+          payF: value['data']['pay_f'].toString(),
           sum: value['data']['sum'].toString(),
           currency: currency,
         ),
@@ -190,6 +190,7 @@ class MoneyAllNotifier extends StateNotifier<MoneyResponseState> {
             payC: exValue[19],
             payD: exValue[20],
             payE: exValue[21],
+            payF: exValue[22],
             sum: '',
             currency: 0,
           ),

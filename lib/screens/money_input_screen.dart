@@ -50,6 +50,7 @@ class MoneyInputScreen extends ConsumerWidget {
     payC: '',
     payD: '',
     payE: '',
+    payF: '',
     sum: '',
     currency: 0,
   );
@@ -76,6 +77,7 @@ class MoneyInputScreen extends ConsumerWidget {
   TextEditingController tecPayC = TextEditingController(text: '0');
   TextEditingController tecPayD = TextEditingController(text: '0');
   TextEditingController tecPayE = TextEditingController(text: '0');
+  TextEditingController tecPayF = TextEditingController(text: '0');
 
   Soundpool soundpool = Soundpool(streamType: StreamType.notification);
 
@@ -301,6 +303,7 @@ class MoneyInputScreen extends ConsumerWidget {
     tecPayC.text = moneyState.payC;
     tecPayD.text = moneyState.payD;
     tecPayE.text = moneyState.payE;
+    tecPayF.text = moneyState.payF;
 
     _ref.read(moneyInputProvider.notifier).setDate(date: date.yyyymmdd);
 
@@ -326,6 +329,7 @@ class MoneyInputScreen extends ConsumerWidget {
     _ref.read(moneyInputProvider.notifier).setPayC(payC: moneyState.payC);
     _ref.read(moneyInputProvider.notifier).setPayD(payD: moneyState.payD);
     _ref.read(moneyInputProvider.notifier).setPayE(payE: moneyState.payE);
+    _ref.read(moneyInputProvider.notifier).setPayF(payF: moneyState.payF);
 
     lastSum = moneyState.sum.toInt();
   }
@@ -573,7 +577,13 @@ class MoneyInputScreen extends ConsumerWidget {
                 tec: tecPayE,
               ),
             ),
-            Expanded(child: Container()),
+            Expanded(
+              child: displayInputParts(
+                name: bankName['pay_f'].toString(),
+                kind: 'pay_f',
+                tec: tecPayF,
+              ),
+            ),
             Expanded(child: Container()),
             Expanded(child: Container()),
           ],
@@ -669,6 +679,9 @@ class MoneyInputScreen extends ConsumerWidget {
       case 'pay_e':
         inputMoneyViewModel.setPayE(payE: value);
         break;
+      case 'pay_f':
+        inputMoneyViewModel.setPayF(payF: value);
+        break;
     }
   }
 
@@ -699,6 +712,7 @@ class MoneyInputScreen extends ConsumerWidget {
     totalValue.add(['1', tecPayC.text]);
     totalValue.add(['1', tecPayD.text]);
     totalValue.add(['1', tecPayE.text]);
+    totalValue.add(['1', tecPayF.text]);
 
     for (var i = 0; i < totalValue.length; i++) {
       onedayTotal += totalValue[i][0].toInt() * totalValue[i][1].toInt();
@@ -737,6 +751,7 @@ class MoneyInputScreen extends ConsumerWidget {
     uploadData['pay_c'] = tecPayC.text;
     uploadData['pay_d'] = tecPayD.text;
     uploadData['pay_e'] = tecPayE.text;
+    uploadData['pay_f'] = tecPayF.text;
 
     await _ref.read(moneyInputProvider.notifier).insertMoney(uploadData: uploadData);
 

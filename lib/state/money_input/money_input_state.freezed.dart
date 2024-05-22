@@ -41,6 +41,7 @@ mixin _$MoneyInputState {
   String get payC => throw _privateConstructorUsedError;
   String get payD => throw _privateConstructorUsedError;
   String get payE => throw _privateConstructorUsedError;
+  String get payF => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -75,7 +76,8 @@ abstract class $MoneyInputStateCopyWith<$Res> {
       String payB,
       String payC,
       String payD,
-      String payE});
+      String payE,
+      String payF});
 }
 
 /// @nodoc
@@ -112,6 +114,7 @@ class _$MoneyInputStateCopyWithImpl<$Res, $Val extends MoneyInputState>
     Object? payC = null,
     Object? payD = null,
     Object? payE = null,
+    Object? payF = null,
   }) {
     return _then(_value.copyWith(
       date: null == date
@@ -198,6 +201,10 @@ class _$MoneyInputStateCopyWithImpl<$Res, $Val extends MoneyInputState>
           ? _value.payE
           : payE // ignore: cast_nullable_to_non_nullable
               as String,
+      payF: null == payF
+          ? _value.payF
+          : payF // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -231,7 +238,8 @@ abstract class _$$MoneyInputStateImplCopyWith<$Res>
       String payB,
       String payC,
       String payD,
-      String payE});
+      String payE,
+      String payF});
 }
 
 /// @nodoc
@@ -266,6 +274,7 @@ class __$$MoneyInputStateImplCopyWithImpl<$Res>
     Object? payC = null,
     Object? payD = null,
     Object? payE = null,
+    Object? payF = null,
   }) {
     return _then(_$MoneyInputStateImpl(
       date: null == date
@@ -352,6 +361,10 @@ class __$$MoneyInputStateImplCopyWithImpl<$Res>
           ? _value.payE
           : payE // ignore: cast_nullable_to_non_nullable
               as String,
+      payF: null == payF
+          ? _value.payF
+          : payF // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -380,7 +393,8 @@ class _$MoneyInputStateImpl implements _MoneyInputState {
       this.payB = '',
       this.payC = '',
       this.payD = '',
-      this.payE = ''});
+      this.payE = '',
+      this.payF = ''});
 
   factory _$MoneyInputStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$MoneyInputStateImplFromJson(json);
@@ -451,10 +465,13 @@ class _$MoneyInputStateImpl implements _MoneyInputState {
   @override
   @JsonKey()
   final String payE;
+  @override
+  @JsonKey()
+  final String payF;
 
   @override
   String toString() {
-    return 'MoneyInputState(date: $date, yen10000: $yen10000, yen5000: $yen5000, yen2000: $yen2000, yen1000: $yen1000, yen500: $yen500, yen100: $yen100, yen50: $yen50, yen10: $yen10, yen5: $yen5, yen1: $yen1, bankA: $bankA, bankB: $bankB, bankC: $bankC, bankD: $bankD, bankE: $bankE, payA: $payA, payB: $payB, payC: $payC, payD: $payD, payE: $payE)';
+    return 'MoneyInputState(date: $date, yen10000: $yen10000, yen5000: $yen5000, yen2000: $yen2000, yen1000: $yen1000, yen500: $yen500, yen100: $yen100, yen50: $yen50, yen10: $yen10, yen5: $yen5, yen1: $yen1, bankA: $bankA, bankB: $bankB, bankC: $bankC, bankD: $bankD, bankE: $bankE, payA: $payA, payB: $payB, payC: $payC, payD: $payD, payE: $payE, payF: $payF)';
   }
 
   @override
@@ -483,7 +500,8 @@ class _$MoneyInputStateImpl implements _MoneyInputState {
             (identical(other.payB, payB) || other.payB == payB) &&
             (identical(other.payC, payC) || other.payC == payC) &&
             (identical(other.payD, payD) || other.payD == payD) &&
-            (identical(other.payE, payE) || other.payE == payE));
+            (identical(other.payE, payE) || other.payE == payE) &&
+            (identical(other.payF, payF) || other.payF == payF));
   }
 
   @JsonKey(ignore: true)
@@ -510,7 +528,8 @@ class _$MoneyInputStateImpl implements _MoneyInputState {
         payB,
         payC,
         payD,
-        payE
+        payE,
+        payF
       ]);
 
   @JsonKey(ignore: true)
@@ -550,7 +569,8 @@ abstract class _MoneyInputState implements MoneyInputState {
       final String payB,
       final String payC,
       final String payD,
-      final String payE}) = _$MoneyInputStateImpl;
+      final String payE,
+      final String payF}) = _$MoneyInputStateImpl;
 
   factory _MoneyInputState.fromJson(Map<String, dynamic> json) =
       _$MoneyInputStateImpl.fromJson;
@@ -597,6 +617,8 @@ abstract class _MoneyInputState implements MoneyInputState {
   String get payD;
   @override
   String get payE;
+  @override
+  String get payF;
   @override
   @JsonKey(ignore: true)
   _$$MoneyInputStateImplCopyWith<_$MoneyInputStateImpl> get copyWith =>

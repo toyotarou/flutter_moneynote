@@ -69,9 +69,7 @@ class MoneyPage extends ConsumerWidget {
     final yesterdayMoney = ref.watch(moneyProvider(yesterday!).select((value) => value.money));
 
     if (money != null && yesterdayMoney != null) {
-      diff = (money.sum == '' || yesterdayMoney.sum == '')
-          ? '0'
-          : (yesterdayMoney.sum.toInt() - money.sum.toInt()).toString();
+      diff = (money.sum == '' || yesterdayMoney.sum == '') ? '0' : (yesterdayMoney.sum.toInt() - money.sum.toInt()).toString();
     }
     //===================================//
 
@@ -132,13 +130,11 @@ class MoneyPage extends ConsumerWidget {
                               icon: const Icon(Icons.input),
                             ),
                             IconButton(
-                              onPressed: () =>
-                                  context.goNamed(RouteNames.spendItemInput, extra: {'date': date, 'diff': diff}),
+                              onPressed: () => context.goNamed(RouteNames.spendItemInput, extra: {'date': date, 'diff': diff}),
                               icon: const Icon(Icons.list),
                             ),
                             IconButton(
-                              onPressed: () =>
-                                  context.goNamed(RouteNames.timePlaceInput, extra: {'date': date, 'diff': diff}),
+                              onPressed: () => context.goNamed(RouteNames.timePlaceInput, extra: {'date': date, 'diff': diff}),
                               icon: const Icon(Icons.access_time),
                             ),
                           ],
@@ -263,8 +259,7 @@ class MoneyPage extends ConsumerWidget {
     ///////////////////////////////////////////
     final yearSpendToToday = <int, int>{};
 
-    final spendSamedayYearlyList =
-        _ref.watch(spendSamedayYearlyProvider(date).select((value) => value.spendSamedayYearlyList));
+    final spendSamedayYearlyList = _ref.watch(spendSamedayYearlyProvider(date).select((value) => value.spendSamedayYearlyList));
 
     spendSamedayYearlyList.value?.forEach((element) {
       final bene = genBenefitMap[element.year] ?? 0;
@@ -299,8 +294,7 @@ class MoneyPage extends ConsumerWidget {
                 style: const TextStyle(color: Colors.white),
                 child: Row(
                   children: [
-                    Expanded(
-                        child: Text('${element.year}-01-01\n-> ${date.mmdd}', style: const TextStyle(fontSize: 10))),
+                    Expanded(child: Text('${element.year}-01-01\n-> ${date.mmdd}', style: const TextStyle(fontSize: 10))),
                     Expanded(
                       child: Container(
                         alignment: Alignment.topRight,
@@ -546,8 +540,7 @@ class MoneyPage extends ConsumerWidget {
                                   ),
                                   const SizedBox(width: 10),
                                   GestureDetector(
-                                    onTap: () =>
-                                        MoneyDialog(context: _context, widget: BankDataListAlert(flag: 'bank')),
+                                    onTap: () => MoneyDialog(context: _context, widget: BankDataListAlert(flag: 'bank')),
                                     child: const Icon(Icons.list),
                                   ),
                                 ],
@@ -631,8 +624,9 @@ class MoneyPage extends ConsumerWidget {
     final payStateC = _ref.watch(bankLastProvider('pay_c').select((value) => value.bankCompanyChange));
     final payStateD = _ref.watch(bankLastProvider('pay_d').select((value) => value.bankCompanyChange));
     final payStateE = _ref.watch(bankLastProvider('pay_e').select((value) => value.bankCompanyChange));
+    final payStateF = _ref.watch(bankLastProvider('pay_f').select((value) => value.bankCompanyChange));
 
-    return (payStateA == null || payStateB == null || payStateC == null || payStateD == null || payStateE == null)
+    return (payStateA == null || payStateB == null || payStateC == null || payStateD == null || payStateE == null || payStateF == null)
         ? Container()
         : DefaultTextStyle(
             style: const TextStyle(fontSize: 12),
@@ -677,6 +671,7 @@ class MoneyPage extends ConsumerWidget {
                         getBankDispRow(name: 'pay_c', price: data.payC, dt: payStateC.date.toString()),
                         getBankDispRow(name: 'pay_d', price: data.payD, dt: payStateD.date.toString()),
                         getBankDispRow(name: 'pay_e', price: data.payE, dt: payStateE.date.toString()),
+                        getBankDispRow(name: 'pay_f', price: data.payF, dt: payStateF.date.toString()),
                       ],
                     ),
                   ),
@@ -705,9 +700,7 @@ class MoneyPage extends ConsumerWidget {
 
       notMoneyAsset.add(goldState.lastGold!.goldValue.toString().toInt());
 
-      score =
-          ((goldState.lastGold!.goldValue.toString().toInt() / goldState.lastGold!.payPrice.toString().toInt()) * 100)
-              .round();
+      score = ((goldState.lastGold!.goldValue.toString().toInt() / goldState.lastGold!.payPrice.toString().toInt()) * 100).round();
     }
 
     return DefaultTextStyle(
@@ -738,9 +731,7 @@ class MoneyPage extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      (goldState.lastGold!.payPrice == null)
-                          ? Container()
-                          : Text(goldState.lastGold!.payPrice.toString().toCurrency()),
+                      (goldState.lastGold!.payPrice == null) ? Container() : Text(goldState.lastGold!.payPrice.toString().toCurrency()),
                       (goldState.lastGold!.goldValue == null)
                           ? Container()
                           : Text(
@@ -855,9 +846,7 @@ class MoneyPage extends ConsumerWidget {
       notMoneyAsset.add(shintakuState.lastShintaku!.price);
 
       if (shintakuState.lastShintaku!.price != null && shintakuState.lastShintaku!.cost != null) {
-        score = ((shintakuState.lastShintaku!.price.toString().toInt() /
-                    shintakuState.lastShintaku!.cost.toString().toInt()) *
-                100)
+        score = ((shintakuState.lastShintaku!.price.toString().toInt() / shintakuState.lastShintaku!.cost.toString().toInt()) * 100)
             .toString()
             .split('.')[0];
       }
@@ -889,8 +878,7 @@ class MoneyPage extends ConsumerWidget {
                       Expanded(
                         child: Container(
                           alignment: Alignment.topRight,
-                          child: Text(
-                              (shintakuState.lastShintaku == null) ? '' : shintakuState.lastShintaku!.date.yyyymmdd),
+                          child: Text((shintakuState.lastShintaku == null) ? '' : shintakuState.lastShintaku!.date.yyyymmdd),
                         ),
                       ),
                     ],
@@ -899,18 +887,14 @@ class MoneyPage extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text((shintakuState.lastShintaku == null)
-                          ? ''
-                          : shintakuState.lastShintaku!.cost.toString().toCurrency()),
+                      Text((shintakuState.lastShintaku == null) ? '' : shintakuState.lastShintaku!.cost.toString().toCurrency()),
                       (shintakuState.lastShintaku == null)
                           ? const Text('')
                           : Text(
                               shintakuState.lastShintaku!.price.toString().toCurrency(),
                               style: const TextStyle(color: Colors.yellowAccent),
                             ),
-                      Text((shintakuState.lastShintaku == null)
-                          ? ''
-                          : shintakuState.lastShintaku!.diff.toString().toCurrency()),
+                      Text((shintakuState.lastShintaku == null) ? '' : shintakuState.lastShintaku!.diff.toString().toCurrency()),
                       Text('$score %'),
                     ],
                   ),

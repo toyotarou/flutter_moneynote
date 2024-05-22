@@ -30,6 +30,7 @@ _$MoneyInputStateImpl _$$MoneyInputStateImplFromJson(
       payC: json['payC'] as String? ?? '',
       payD: json['payD'] as String? ?? '',
       payE: json['payE'] as String? ?? '',
+      payF: json['payF'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$MoneyInputStateImplToJson(
@@ -56,4 +57,5 @@ Map<String, dynamic> _$$MoneyInputStateImplToJson(
       'payC': instance.payC,
       'payD': instance.payD,
       'payE': instance.payE,
+      'payF': instance.payF,
     };
