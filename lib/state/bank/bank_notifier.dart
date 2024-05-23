@@ -21,8 +21,7 @@ bankMonthlySpendProvider        BankResponseState
 
 ////////////////////////////////////////////////
 
-final bankLastProvider =
-    StateNotifierProvider.autoDispose.family<BankLastNotifier, BankResponseState, String>((ref, bank) {
+final bankLastProvider = StateNotifierProvider.autoDispose.family<BankLastNotifier, BankResponseState, String>((ref, bank) {
   final client = ref.read(httpClientProvider);
 
   final utility = Utility();
@@ -62,8 +61,7 @@ class BankLastNotifier extends StateNotifier<BankResponseState> {
 
 ////////////////////////////////////////////////
 
-final bankCompanyListProvider =
-    StateNotifierProvider.autoDispose.family<BankCompanyListNotifier, BankResponseState, String>((ref, bank) {
+final bankCompanyListProvider = StateNotifierProvider.autoDispose.family<BankCompanyListNotifier, BankResponseState, String>((ref, bank) {
   final client = ref.read(httpClientProvider);
 
   final utility = Utility();
