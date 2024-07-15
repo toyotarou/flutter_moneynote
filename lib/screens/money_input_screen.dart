@@ -105,7 +105,8 @@ class MoneyInputScreen extends ConsumerWidget {
     //
     //
 
-    final spendYearlyList = _ref.watch(spendMonthDetailProvider(date).select((value) => value.spendYearlyList));
+    final spendYearlyList = _ref.watch(spendMonthDetailProvider(date)
+        .select((value) => value.spendYearlyList));
 
     if (spendYearlyList.value != null) {
       if (spendYearlyList.value!.isNotEmpty) {
@@ -126,6 +127,8 @@ class MoneyInputScreen extends ConsumerWidget {
 
     final spendDiffState = ref.watch(spendDiffProvider);
 
+    final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -137,127 +140,142 @@ class MoneyInputScreen extends ConsumerWidget {
             SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 50),
-                    Container(width: context.screenSize.width),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(),
-                        IconButton(
-                          onPressed: () => context.goNamed(RouteNames.home),
-                          icon: const Icon(Icons.close),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Column(
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: bottomSpace),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 50),
+                      Container(width: context.screenSize.width),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(),
+                          IconButton(
+                            onPressed: () => context.goNamed(RouteNames.home),
+                            icon: const Icon(Icons.close),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    const SizedBox(
+                                        width: 90, child: Text('Today')),
+                                    Text(date.yyyymmdd),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const SizedBox(
+                                        width: 90, child: Text('Last Day')),
+                                    Text(
+                                      lastInputDate,
+                                      style: (date.yyyymmdd == lastInputDate)
+                                          ? const TextStyle(
+                                              color: Colors.yellowAccent,
+                                            )
+                                          : null,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                const Text('form total'),
+                                Text(
+                                  formTotalState.toString().toCurrency(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: Colors.white.withOpacity(0.3),
+                        thickness: 2,
+                      ),
+                      displayMoneyInput(),
+                      displayBankInput(),
+                      displayPayInput(),
+                      Divider(
+                        color: Colors.white.withOpacity(0.3),
+                        thickness: 2,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
                             children: [
-                              Row(
-                                children: [
-                                  const SizedBox(width: 90, child: Text('Today')),
-                                  Text(date.yyyymmdd),
-                                ],
+                              IconButton(
+                                onPressed: () async {
+                                  await soundpool.play(soundC);
+
+                                  await ref
+                                      .read(beforeCallProvider.notifier)
+                                      .setFlag(flag: 1);
+
+                                  setDefaultMoneyData();
+
+                                  // if (date.yyyymmdd != lastInputDate) {
+                                  //   setDefaultMoneyData(usage: 'before');
+                                  // }
+                                },
+                                icon: Icon(
+                                  Icons.copy,
+                                  color: (beforeCallState == 1)
+                                      ? Colors.yellowAccent
+                                      : Colors.white,
+                                ),
                               ),
-                              Row(
-                                children: [
-                                  const SizedBox(width: 90, child: Text('Last Day')),
-                                  Text(
-                                    lastInputDate,
-                                    style: (date.yyyymmdd == lastInputDate)
-                                        ? const TextStyle(
-                                            color: Colors.yellowAccent,
-                                          )
-                                        : null,
-                                  ),
-                                ],
+                              IconButton(
+                                onPressed: () async {
+                                  await soundpool.play(soundD);
+
+                                  await ref
+                                      .read(stopDefaultProvider.notifier)
+                                      .setStop(stop: 1);
+
+                                  makeTotal();
+                                },
+                                icon: const Icon(Icons.check_box),
                               ),
+                              IconButton(
+                                onPressed: () async {
+                                  await soundpool.play(soundE);
+
+                                  await ref
+                                      .read(stopDefaultProvider.notifier)
+                                      .setStop(stop: 1);
+
+                                  await ref
+                                      .read(spendDiffProvider.notifier)
+                                      .setSpend(spend: lastSum - formTotal);
+                                },
+                                icon: const Icon(Icons.arrow_circle_right),
+                              ),
+                              Text(spendDiffState.toString().toCurrency()),
                             ],
                           ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Text('form total'),
-                              Text(
-                                formTotalState.toString().toCurrency(),
-                              ),
-                            ],
+                          IconButton(
+                            onPressed: moneyInsert,
+                            icon: const Icon(
+                              Icons.input,
+                              color: Colors.pinkAccent,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.white.withOpacity(0.3),
-                      thickness: 2,
-                    ),
-                    displayMoneyInput(),
-                    displayBankInput(),
-                    displayPayInput(),
-                    Divider(
-                      color: Colors.white.withOpacity(0.3),
-                      thickness: 2,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            IconButton(
-                              onPressed: () async {
-                                await soundpool.play(soundC);
-
-                                await ref.read(beforeCallProvider.notifier).setFlag(flag: 1);
-
-                                setDefaultMoneyData();
-
-                                // if (date.yyyymmdd != lastInputDate) {
-                                //   setDefaultMoneyData(usage: 'before');
-                                // }
-                              },
-                              icon: Icon(
-                                Icons.copy,
-                                color: (beforeCallState == 1) ? Colors.yellowAccent : Colors.white,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () async {
-                                await soundpool.play(soundD);
-
-                                await ref.read(stopDefaultProvider.notifier).setStop(stop: 1);
-
-                                makeTotal();
-                              },
-                              icon: const Icon(Icons.check_box),
-                            ),
-                            IconButton(
-                              onPressed: () async {
-                                await soundpool.play(soundE);
-
-                                await ref.read(stopDefaultProvider.notifier).setStop(stop: 1);
-
-                                await ref.read(spendDiffProvider.notifier).setSpend(spend: lastSum - formTotal);
-                              },
-                              icon: const Icon(Icons.arrow_circle_right),
-                            ),
-                            Text(spendDiffState.toString().toCurrency()),
-                          ],
-                        ),
-                        IconButton(
-                          onPressed: moneyInsert,
-                          icon: const Icon(
-                            Icons.input,
-                            color: Colors.pinkAccent,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -274,7 +292,8 @@ class MoneyInputScreen extends ConsumerWidget {
     if (date.yyyymmdd == lastInputDate) {
       ms = _ref.watch(moneyProvider(date).select((value) => value.money));
     } else {
-      ms = _ref.watch(moneyProvider(DateTime.parse('$lastInputDate 00:00:00')).select((value) => value.money));
+      ms = _ref.watch(moneyProvider(DateTime.parse('$lastInputDate 00:00:00'))
+          .select((value) => value.money));
     }
 
     if (ms != null) {
@@ -307,10 +326,18 @@ class MoneyInputScreen extends ConsumerWidget {
 
     _ref.read(moneyInputProvider.notifier).setDate(date: date.yyyymmdd);
 
-    _ref.read(moneyInputProvider.notifier).setYen10000(yen10000: moneyState.yen10000);
-    _ref.read(moneyInputProvider.notifier).setYen5000(yen5000: moneyState.yen5000);
-    _ref.read(moneyInputProvider.notifier).setYen2000(yen2000: moneyState.yen2000);
-    _ref.read(moneyInputProvider.notifier).setYen1000(yen1000: moneyState.yen1000);
+    _ref
+        .read(moneyInputProvider.notifier)
+        .setYen10000(yen10000: moneyState.yen10000);
+    _ref
+        .read(moneyInputProvider.notifier)
+        .setYen5000(yen5000: moneyState.yen5000);
+    _ref
+        .read(moneyInputProvider.notifier)
+        .setYen2000(yen2000: moneyState.yen2000);
+    _ref
+        .read(moneyInputProvider.notifier)
+        .setYen1000(yen1000: moneyState.yen1000);
     _ref.read(moneyInputProvider.notifier).setYen500(yen500: moneyState.yen500);
     _ref.read(moneyInputProvider.notifier).setYen100(yen100: moneyState.yen100);
     _ref.read(moneyInputProvider.notifier).setYen50(yen50: moneyState.yen50);
@@ -593,7 +620,10 @@ class MoneyInputScreen extends ConsumerWidget {
   }
 
   ///
-  Widget displayInputParts({required String name, required String kind, required TextEditingController tec}) {
+  Widget displayInputParts(
+      {required String name,
+      required String kind,
+      required TextEditingController tec}) {
     return Container(
       padding: const EdgeInsets.all(10),
       child: TextField(
@@ -753,7 +783,9 @@ class MoneyInputScreen extends ConsumerWidget {
     uploadData['pay_e'] = tecPayE.text;
     uploadData['pay_f'] = tecPayF.text;
 
-    await _ref.read(moneyInputProvider.notifier).insertMoney(uploadData: uploadData);
+    await _ref
+        .read(moneyInputProvider.notifier)
+        .insertMoney(uploadData: uploadData);
 
     await _ref.read(moneyProvider(date).notifier).getMoney(date: date);
 
@@ -764,22 +796,29 @@ class MoneyInputScreen extends ConsumerWidget {
 
   ///
   Future<void> loadSound() async {
-    soundC = await rootBundle.load('assets/sounds/sound_c.mp3').then((ByteData soundData) {
+    soundC = await rootBundle
+        .load('assets/sounds/sound_c.mp3')
+        .then((ByteData soundData) {
       return soundpool.load(soundData);
     });
 
-    soundD = await rootBundle.load('assets/sounds/sound_d.mp3').then((ByteData soundData) {
+    soundD = await rootBundle
+        .load('assets/sounds/sound_d.mp3')
+        .then((ByteData soundData) {
       return soundpool.load(soundData);
     });
 
-    soundE = await rootBundle.load('assets/sounds/sound_e.mp3').then((ByteData soundData) {
+    soundE = await rootBundle
+        .load('assets/sounds/sound_e.mp3')
+        .then((ByteData soundData) {
       return soundpool.load(soundData);
     });
   }
 }
 
 ////////////////////////////////////////////////////////////
-final beforeCallProvider = StateNotifierProvider.autoDispose<BeforeCallStateNotifier, int>((ref) {
+final beforeCallProvider =
+    StateNotifierProvider.autoDispose<BeforeCallStateNotifier, int>((ref) {
   return BeforeCallStateNotifier();
 });
 
@@ -793,7 +832,8 @@ class BeforeCallStateNotifier extends StateNotifier<int> {
 }
 
 ////////////////////////////////////////////////////////////
-final formTotalProvider = StateNotifierProvider.autoDispose<FormTotalStateNotifier, int>((ref) {
+final formTotalProvider =
+    StateNotifierProvider.autoDispose<FormTotalStateNotifier, int>((ref) {
   return FormTotalStateNotifier();
 });
 
@@ -807,7 +847,8 @@ class FormTotalStateNotifier extends StateNotifier<int> {
 }
 
 ////////////////////////////////////////////////////////////
-final spendDiffProvider = StateNotifierProvider.autoDispose<SpendDiffStateNotifier, int>((ref) {
+final spendDiffProvider =
+    StateNotifierProvider.autoDispose<SpendDiffStateNotifier, int>((ref) {
   return SpendDiffStateNotifier();
 });
 
@@ -821,7 +862,8 @@ class SpendDiffStateNotifier extends StateNotifier<int> {
 }
 
 ////////////////////////////////////////////////////////////
-final stopDefaultProvider = StateNotifierProvider.autoDispose<StopDefaultStateNotifier, int>((ref) {
+final stopDefaultProvider =
+    StateNotifierProvider.autoDispose<StopDefaultStateNotifier, int>((ref) {
   return StopDefaultStateNotifier();
 });
 
