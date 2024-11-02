@@ -117,9 +117,8 @@ class MonthlyUnitSpendGraphAlert extends ConsumerWidget {
         bottom: BorderSide(),
       )),
       titlesData: FlTitlesData(
-        show: true,
         topTitles: AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
+          sideTitles: SideTitles(),
         ),
         rightTitles: AxisTitles(
           sideTitles: SideTitles(

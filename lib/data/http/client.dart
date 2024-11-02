@@ -8,7 +8,7 @@ import 'path.dart';
 
 ///////////////////////////////////////////////////////////////////
 final Provider<HttpClient> httpClientProvider = Provider<HttpClient>(
-  (ProviderRef<HttpClient> ref) => HttpClient(),
+  (Ref<HttpClient> ref) => HttpClient(),
 );
 
 ////////////////////
@@ -24,11 +24,9 @@ class HttpClient {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? body,
   }) async {
-    final uri = Uri.http(Environment.apiEndPoint,
-        '${Environment.apiBasePath}/${path.value}', queryParameters);
+    final uri = Uri.http(Environment.apiEndPoint, '${Environment.apiBasePath}/${path.value}', queryParameters);
 
-    final response = await _client.post(uri,
-        headers: await _headers, body: json.encode(body));
+    final response = await _client.post(uri, headers: await _headers, body: json.encode(body));
 
     final bodyString = utf8.decode(response.bodyBytes);
 

@@ -74,8 +74,7 @@ class HomeScreen extends ConsumerWidget {
 
   ///
   void _readIosDeviceInfo(IosDeviceInfo data) {
-    final request =
-        DeviceInfoRequestState(name: data.name ?? '', systemName: data.systemName ?? '', model: data.model ?? '');
+    final request = DeviceInfoRequestState(name: data.name, systemName: data.systemName, model: data.model);
 
     _ref.read(deviceInfoProvider.notifier).setDeviceInfo(param: request);
   }

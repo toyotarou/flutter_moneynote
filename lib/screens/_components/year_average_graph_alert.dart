@@ -125,8 +125,7 @@ class YearAverageGraphAlert extends ConsumerWidget {
       maxY: graphMax.toDouble(),
 
       titlesData: FlTitlesData(
-        show: true,
-        topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        topTitles: AxisTitles(sideTitles: SideTitles()),
 
         //-------------------------// 左側の目盛り
         leftTitles: AxisTitles(
@@ -182,7 +181,7 @@ class YearAverageGraphAlert extends ConsumerWidget {
       ///
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
-          tooltipBgColor: Colors.white.withOpacity(0.3),
+//          tooltipBgColor: Colors.white.withOpacity(0.3),
           getTooltipItems: _utility.getGraphToolTip,
         ),
       ),

@@ -127,7 +127,7 @@ class MoneyScoreGraphAlert extends ConsumerWidget {
       ///
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
-          tooltipBgColor: Colors.white.withOpacity(0.3),
+//          tooltipBgColor: Colors.white.withOpacity(0.3),
           getTooltipItems: _utility.getGraphToolTip,
         ),
       ),
@@ -137,11 +137,9 @@ class MoneyScoreGraphAlert extends ConsumerWidget {
 
       ///
       titlesData: FlTitlesData(
-        show: true,
-
         //-------------------------// 上部の目盛り
         topTitles: AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
+          sideTitles: SideTitles(),
         ),
         //-------------------------// 上部の目盛り
 

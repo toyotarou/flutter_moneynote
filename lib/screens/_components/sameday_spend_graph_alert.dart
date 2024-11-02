@@ -175,8 +175,10 @@ class SamedaySpendGraphAlert extends ConsumerWidget {
 
       ///
       lineTouchData: LineTouchData(
-        touchTooltipData:
-            LineTouchTooltipData(tooltipBgColor: Colors.white.withOpacity(0.3), getTooltipItems: getGraphToolTip),
+        touchTooltipData: LineTouchTooltipData(
+//          tooltipBgColor: Colors.white.withOpacity(0.3),
+          getTooltipItems: getGraphToolTip,
+        ),
       ),
 
       ///
@@ -184,10 +186,8 @@ class SamedaySpendGraphAlert extends ConsumerWidget {
 
       ///
       titlesData: FlTitlesData(
-        show: true,
-
         //-------------------------// 上部の目盛り
-        topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        topTitles: AxisTitles(sideTitles: SideTitles()),
         //-------------------------// 上部の目盛り
 
         //-------------------------// 下部の目盛り

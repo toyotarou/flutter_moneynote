@@ -176,7 +176,7 @@ class MonthlySpendGraphAlert extends ConsumerWidget {
       ///
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
-          tooltipBgColor: Colors.white.withOpacity(0.3),
+//          tooltipBgColor: Colors.white.withOpacity(0.3),
           getTooltipItems: _utility.getGraphToolTip,
         ),
       ),
@@ -186,8 +186,6 @@ class MonthlySpendGraphAlert extends ConsumerWidget {
 
       ///
       titlesData: FlTitlesData(
-        show: true,
-
         //-------------------------// 上部の目盛り
         topTitles: AxisTitles(
           sideTitles: SideTitles(
@@ -218,19 +216,19 @@ class MonthlySpendGraphAlert extends ConsumerWidget {
         ),
         //-------------------------// 下部の目盛り
 
-        //-------------------------// 左側の目盛り
-        leftTitles: (graphWidthState == minGraphRate)
-            ? null
-            : AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  reservedSize: 100,
-                  getTitlesWidget: (value, meta) {
-                    return Text(value.toInt().toString());
-                  },
-                ),
-              ),
-        //-------------------------// 左側の目盛り
+        // //-------------------------// 左側の目盛り
+        // leftTitles: (graphWidthState == minGraphRate)
+        //     ? null
+        //     : AxisTitles(
+        //         sideTitles: SideTitles(
+        //           showTitles: true,
+        //           reservedSize: 100,
+        //           getTitlesWidget: (value, meta) {
+        //             return Text(value.toInt().toString());
+        //           },
+        //         ),
+        //       ),
+        // //-------------------------// 左側の目盛り
 
         //-------------------------// 右側の目盛り
 

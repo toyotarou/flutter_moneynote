@@ -13,6 +13,7 @@ final mapMarkerProvider = StateNotifierProvider.autoDispose<MapMarkerNotifier, M
 class MapMarkerNotifier extends StateNotifier<MapMarkerState> {
   MapMarkerNotifier(super.state, {required this.ref});
 
+  // ignore: deprecated_member_use
   final AutoDisposeStateNotifierProviderRef<MapMarkerNotifier, MapMarkerState> ref;
 
   Future<void> getMapMarker({required DateTime date, required String time}) async {

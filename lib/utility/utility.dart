@@ -209,9 +209,6 @@ class Utility {
     final flline = FlLine(color: Colors.white30, strokeWidth: 1);
 
     return FlGridData(
-      show: true,
-      drawVerticalLine: true,
-
       //横線
       getDrawingHorizontalLine: (value) => flline,
 

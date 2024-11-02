@@ -17,6 +17,7 @@ import 'assets_calendar_alert.dart';
 
 class AssetsInfo {
   AssetsInfo(this.goldCost, this.goldPrice, this.goldDiff, this.stockCost, this.stockPrice, this.stockDiff, this.shintakuCost, this.shintakuPrice,
+      // ignore: avoid_positional_boolean_parameters
       this.shintakuDiff, this.dispFlag);
 
   int goldCost;
